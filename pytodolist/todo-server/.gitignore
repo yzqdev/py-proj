@@ -1,0 +1,4 @@
+*.pyc
+.idea
+app.txt
+email_config.py

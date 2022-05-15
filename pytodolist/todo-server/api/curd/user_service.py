@@ -22,7 +22,7 @@ def get_user_by_email(db: Session, email: str):
 
 def create_user(db: Session, user_create: UserCreate):
     fake_hashed_password = user_create.password + "notreallyhashed"
-    db_user =  User(email=user_create.email, hashed_password=fake_hashed_password)
+    db_user =  User(email=user_create.email,  )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

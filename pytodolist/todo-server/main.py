@@ -1,57 +1,12 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
-from typing import List
-
-from fastapi import (
-    FastAPI
-)
-from fastapi_mail import FastMail, MessageSchema
-from pydantic import EmailStr, BaseModel
-from starlette.responses import JSONResponse
-
-from email_config import conf, html
+# -*-coding:utf-8-*-
 
 
-class Student(object):
-    def __init__(self, name, score):
-        self.name = name
-        self.score = score
+from uvicorn import run
+# 下面这个不要删除，否则无法运行
+from api import app
 
-
-SECRET_KEY = 'This is my key'
-
-
-class EmailSchema(BaseModel):
-    email: List[EmailStr]
-
-
-app = FastAPI()
-
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/items")
-async def items():
-    stu = Student('zhangsan', 90)
-    return {"items": stu}
-
-
-@app.post("/email")
-async def simple_send(
-        email: EmailSchema
-) -> JSONResponse:
-    message = MessageSchema(
-        subject="this is subject",
-        recipients=email.dict().get("email"),  # List of recipients, as many as you can pass
-        body=html,
-        subtype="html"
-    )
-
-    fm = FastMail(conf)
-    await fm.send_message(message)
-    return JSONResponse(status_code=200, content={"message": "email has been sent"})
+if __name__ == '__main__':
+    print('下面是文档地址:')
+    print("http://127.0.0.1:8000/docs")
+    run('main:app', reload=True)

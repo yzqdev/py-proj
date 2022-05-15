@@ -1,55 +1,64 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
- Source Server Type    : MySQL
- Source Server Version : 80025
- Source Host           : localhost:3306
- Source Schema         : pytodolist
+ Source Server         : localpg
+ Source Server Type    : PostgreSQL
+ Source Server Version : 140002
+ Source Host           : localhost:5432
+ Source Catalog        : pytodolist
+ Source Schema         : public
 
- Target Server Type    : MySQL
- Target Server Version : 80025
+ Target Server Type    : PostgreSQL
+ Target Server Version : 140002
  File Encoding         : 65001
 
- Date: 30/07/2021 15:23:49
+ Date: 15/05/2022 23:13:59
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for todolist
 -- ----------------------------
-DROP TABLE IF EXISTS `todolist`;
-CREATE TABLE `todolist`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `title` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` int NOT NULL COMMENT '是否完成',
-  `create_time` int NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS "public"."todolist";
+CREATE TABLE "public"."todolist" (
+  "id" int4 NOT NULL,
+  "user_id" int4 NOT NULL,
+  "title" varchar(1024) COLLATE "pg_catalog"."default" NOT NULL,
+  "status" int4 NOT NULL,
+  "create_time" int4 NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."todolist"."status" IS '是否完成';
 
 -- ----------------------------
 -- Records of todolist
 -- ----------------------------
-INSERT INTO `todolist` VALUES (1, 1, '习近平五谈稳中求进织密扎牢民生保障网', 0, 1482214350);
-INSERT INTO `todolist` VALUES (2, 1, '特朗普获超270张选举人票将入主白 宫', 1, 1482214350);
+INSERT INTO "public"."todolist" VALUES (1, 1, '习近平五谈稳中求进织密扎牢民是犯法第三方生保障网', 0, 1482214350);
+INSERT INTO "public"."todolist" VALUES (2, 1, '特朗普获超270张选举人票将入主白 宫', 1, 1482214350);
+INSERT INTO "public"."todolist" VALUES (4, 1, '啊啊啊', 1, 1644454997);
 
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `password` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS "public"."user";
+CREATE TABLE "public"."user" (
+  "id" int4 NOT NULL,
+  "username" varchar(24) COLLATE "pg_catalog"."default",
+  "password" varchar(24) COLLATE "pg_catalog"."default"
+)
+;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', 'admin');
+INSERT INTO "public"."user" VALUES (1, 'admin', 'admin');
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- ----------------------------
+-- Primary Key structure for table todolist
+-- ----------------------------
+ALTER TABLE "public"."todolist" ADD CONSTRAINT "todolist_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Primary Key structure for table user
+-- ----------------------------
+ALTER TABLE "public"."user" ADD CONSTRAINT "user_pkey" PRIMARY KEY ("id");
